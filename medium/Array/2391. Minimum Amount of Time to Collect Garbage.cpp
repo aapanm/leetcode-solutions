@@ -28,3 +28,43 @@ public:
         
     }
 };
+
+//another
+
+class Solution {
+public:
+    int garbageCollection(vector<string>& garbage, vector<int>& travel) {
+        
+        int cost = 0;
+        
+        for(int i = 0 ; i < garbage.size(); i++){
+            cost+=garbage[i].size();
+        }
+        
+        vector <int> travCost(travel.size());
+        
+        travCost[0] = travel[0];
+        
+        if(travel.size() > 1){
+            for(int i = 1; i < travel.size(); ++i){
+                travCost[i] = travCost[i-1] + travel[i];
+            }
+        }
+        
+        int g=0, p=0, m=0;
+        
+        for(int i = garbage.size() - 1; i >= 0; --i){
+            if (g && p && m) break;
+            for(int j = 0; j < garbage[i].size(); ++j){
+                if(i > 0){
+                    if(garbage[i][j] == 'G') {if(!g){cost+=travCost[i-1], g = 1;}}
+                    if(garbage[i][j] == 'P') {if(!p){cost+=travCost[i-1], p = 1;}}
+                    if(garbage[i][j] == 'M') {if(!m){cost+=travCost[i-1], m = 1;}}
+                }
+            }
+        }
+        
+        return cost;
+        
+    }
+};
