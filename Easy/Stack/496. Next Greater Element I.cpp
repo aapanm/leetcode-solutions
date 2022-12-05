@@ -73,3 +73,32 @@ public:
     }
     
 };
+
+//only hasmap
+
+class Solution {
+public:
+    vector<int> nextGreaterElement(vector<int>& nums1, vector<int>& nums2) {
+        
+        unordered_map <int, int> m;
+        
+        for(int i=0; i<nums2.size(); ++i){
+            m[nums2[i]] = i;
+        }
+        
+        for(int i=0; i<nums1.size(); ++i){
+            int curr = m[nums1[i]];
+            int mx = -1;
+            for(int j=curr+1; j<nums2.size(); ++j){
+                if(nums2[j]>nums1[i]){
+                    mx = nums2[j];
+                    break;
+                }
+            }
+            nums1[i] = mx;
+        }
+        
+        return nums1;
+        
+    }
+};
