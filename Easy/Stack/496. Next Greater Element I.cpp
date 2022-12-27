@@ -1,3 +1,41 @@
+//hashmap + stack, 0ms, 100%
+class Solution {
+public:
+    vector<int> nextGreaterElement(vector<int>& nums1, vector<int>& nums2) {
+        
+        unordered_map <int,int> mp;
+        
+        for(int i=0; i<nums2.size(); ++i){
+            mp[nums2[i]] = i;    
+        }
+        
+        for(int i=0; i<nums1.size(); ++i){
+            
+            int curr=nums1[i];
+            int currPos=mp[curr];
+            
+            stack <int> st;
+            st.push(curr);
+            
+            for(int j=currPos+1; j<nums2.size(); ++j){
+                if(nums2[j] > st.top()){
+                    st.pop();
+                    st.push(nums2[j]);
+                    break;
+                }    
+            }
+            
+            if(st.top() > curr) nums1[i] = st.top();
+            else nums1[i] = -1;
+            
+        }
+        
+        return nums1;
+        
+    }
+};
+
+
 //stack solution
 
 class Solution {
