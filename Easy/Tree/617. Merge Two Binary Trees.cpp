@@ -74,3 +74,55 @@ public:
         return root1;
     }
 };
+
+//bfs
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    TreeNode* mergeTrees(TreeNode* root1, TreeNode* root2) {
+        
+        if(!root1) return root2;
+        if(!root2) return root1;
+        
+        queue<vector<TreeNode*>> q;
+        q.push({root1, root2});
+        
+        while(!q.empty()){
+            
+            int qsize = q.size();
+            
+            for(int i=0; i<qsize; ++i){
+                
+                vector <TreeNode*> v = q.front();
+                q.pop();
+                
+                v[0]->val += v[1]->val;
+                
+                if(v[0]->left){
+                    if(v[1]->left) q.push({v[0]->left, v[1]->left});
+                }else{
+                    if(v[1]->left) v[0]->left = v[1]->left;
+                }
+                
+                if(v[0]->right){
+                    if(v[1]->right) q.push({v[0]->right, v[1]->right});
+                }else{
+                    if(v[1]->right) v[0]->right = v[1]->right;
+                }
+            }
+        }
+        
+        return root1;
+    }
+};
