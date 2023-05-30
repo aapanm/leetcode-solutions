@@ -17,27 +17,18 @@ public:
     
     TreeNode* createBinaryTree(vector<int>& arr, int l, int h){
         
+        if(l > h){
+            return NULL;
+        }
+        
+        
         int m = (l+h)/2;
         
         TreeNode* root = new TreeNode();
         root->val = arr[m];
+        root->left = createBinaryTree(arr, l, m-1);
+        root->right = createBinaryTree(arr, m+1, h);
         
-        if(l == h){
-            root->left = NULL;
-            root->right = NULL;
-        }else{
-            if(l==m){
-                root->left = NULL;
-            }else{
-                root->left = createBinaryTree(arr, l, m-1);
-            }
-            
-            if(m==h){
-                root->right = NULL;
-            }else{
-                root->right = createBinaryTree(arr, m+1, h);
-            }
-        }
         
         return root;
     
