@@ -27,6 +27,40 @@ public:
     }
 };
 
+/**
+ * another approach
+**/
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+
+class Solution {
+public:
+    TreeNode* getTargetCopy(TreeNode* original, TreeNode* cloned, TreeNode* target) {
+        return findClone(original, cloned, target);
+    }
+    
+    TreeNode* findClone(TreeNode* org, TreeNode* cl, TreeNode* trgt){
+        if(!org) return NULL;
+        
+        if(org == trgt && cl->val == trgt->val) return cl;
+        
+        TreeNode* res = NULL; 
+        
+        res = findClone(org->left, cl->left, trgt);
+        if(!res) res = findClone(org->right, cl->right, trgt);
+        
+        return res;
+    }
+};
+
 
 //stack
 
